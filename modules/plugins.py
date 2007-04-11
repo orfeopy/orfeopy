@@ -109,10 +109,10 @@ class plugins(object):
             registro'''
             
         db  = self.db
-        reg = self.registro
+        reg = registro
         dbp = db.plug_plugins
         dbp.truncate()
-        if not db(dbp.plug_nombre == self.registro["plug_nombre"]).select(dbp.plug_nombre):
+        if not db(dbp.plug_nombre == reg["plug_nombre"]).select(dbp.plug_nombre):
             dbp.insert( plug_nombre      = reg['plug_nombre'],
                         plug_descripcion = reg['plug_descripcion'],
                         plug_autor       = reg['plug_autor'],

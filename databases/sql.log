@@ -2363,3 +2363,42 @@ success!
 DELETE FROM plug_plugins;
 DELETE FROM sqlite_sequence WHERE name='plug_plugins';
 success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
