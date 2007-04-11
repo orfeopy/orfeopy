@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_var>
+    <DB_CONNECT_URI>sqlite://storage.sqlite</DB_CONNECT_URI>
+    <MAIL_SERVER>logging</MAIL_SERVER>
+    <MAIL_SENDER>you@gmail.com</MAIL_SENDER>
+    <MAIL_LOGIN>username:password</MAIL_LOGIN>
+    <AUTH_REGIS_METHOD>None</AUTH_REGIS_METHOD>
+    <AUTH_HMAC_KEY>sha512:ab9bf8b0-66f2-479a-bfbe-6de731c8fc75</AUTH_HMAC_KEY>
+    <AUTH_RECAP_PUBLKEY>PUBLIC_KEY</AUTH_RECAP_PUBLKEY>
+    <AUTH_RECAP_PRIVKEY>PRIVATE_KEY</AUTH_RECAP_PRIVKEY>
+    <AUTH_RESETPASSW_VERIFICATION>True</AUTH_RESETPASSW_VERIFICATION>
+    <CONF_TITLE>Orfeopy1</CONF_TITLE>
+    <CONF_SUBTITLE>Sistema De Gestion Documental</CONF_SUBTITLE>
+    <CONF_AUTHOR>aurigadl@gmail.com</CONF_AUTHOR>
+    <CONF_DESCRIPTION>
+        Free and open source Documental Sistem Gestion for agile development 
+        of fast, scalable, secure and portable database-driven web-based 
+        applications. Written and programmable in Python 
+    </CONF_DESCRIPTION>
+    <CONF_KEYWORDS>
+        Gestion, Gestion, Documental, Documetal, orfeo, orfeopy
+    </CONF_KEYWORDS>
+    <CONF_GENERATOR>correlibre.org</CONF_GENERATOR>
+    <CONF_MENU>Admiinstracion,Acciones,Cuenta</CONF_MENU>
+    <CONF_COPYRIGHT>Copyright 2011</CONF_COPYRIGHT>
+    <FORM_RADICADO>DD-MM-AA-5-CONS-TIP</FORM_RADICADO>
+</config_var>

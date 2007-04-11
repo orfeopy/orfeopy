@@ -1,0 +1,26 @@
+(dp1
+S'body'
+p2
+S'CHAR(512)'
+p3
+sS'tablename'
+p4
+S'CHAR(512)'
+p5
+sS'created_by'
+p6
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p7
+sS'created_on'
+p8
+S'TIMESTAMP'
+p9
+sS'record_id'
+p10
+S'INTEGER'
+p11
+sS'id'
+p12
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p13
+s.

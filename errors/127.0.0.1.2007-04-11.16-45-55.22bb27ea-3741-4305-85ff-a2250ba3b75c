@@ -1,0 +1,925 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/aurigadl/Documents/web2py/applications/Gesdoc2/models/_configVariables.py'
+p4
+sS'code'
+p5
+S"#-*- coding: utf-8 -*-\n#\n# Orfeopy, Sistema de gestion documental basado en python \n# Site: https://github.com/orfeopy/ \n# desarrollado por aurigadl@gmail.com\n#\n# Copyright (c) 2011 correlibre.org \n#\n# License Code: GPL, General Public License v. 2.0\n# License Content: Creative Commons Attribution 3.0 \n#\n# Also visit: orfeogpl.org\n#             or Groups: http://groups.google.com/group/orfeopy \n#                http://groups.google.com/group/orfeopy-usuarios  \n#\n#\n#  This program is free software: you can redistribute it and/or modify\n#  it under the terms of the GNU General Public License as published by\n#  the Free Software Foundation, either version 2 of the License, or\n#  (at your option) any later version.\n#\n#  This program is distributed in the hope that it will be useful,\n#  but WITHOUT ANY WARRANTY; without even the implied warranty of\n#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n#  GNU General Public License for more details.\n#\n#  You should have received a copy of the GNU General Public License\n#  along with this program.  If not, see <http://www.gnu.org/licenses/>\n\n\n################################\n#### configuracion   ###########\n################################\n\n# Las constantes las tenemos almacenadas en el \n# archivo /private/config.xml y permitiran realizar\n# cambios desde la administracion.\n\nimport os\nimport copy\nfrom   gluon.storage import *\n\n\nglobals2   = Storage(copy.copy(globals()))\n\nconstan    = local_import('setConst', True)\nplugin     = local_import('plugins', True)\nxmlFile    = 'config.xml'\n\npath       = os.path.join(request.folder,'private',xmlFile)\nconf       = constan.setConst(path, globals2, response)\n\ndb         = conf.connect_to_db()\nmail       = conf.init_mail()\n\nauth       = constan.myAuth(path, globals2, db, mail)\ndb         = auth.initAuth()\n\nplugin_Prueba = plugin.plugins(globals2, pluginPrueba, db)\ndb            = plugin_Prueba.regisPlugins()\n"
+p6
+sS'snapshot'
+p7
+(dp8
+S'exception'
+p9
+(dp10
+S'__hash__'
+p11
+S"<method-wrapper '__hash__' of exceptions.NameError object>"
+p12
+sS'__setattr__'
+p13
+S"<method-wrapper '__setattr__' of exceptions.NameError object>"
+p14
+sS'__reduce_ex__'
+p15
+S'<built-in method __reduce_ex__ of exceptions.NameError object>'
+p16
+sS'__getslice__'
+p17
+S"<method-wrapper '__getslice__' of exceptions.NameError object>"
+p18
+sS'__getitem__'
+p19
+S"<method-wrapper '__getitem__' of exceptions.NameError object>"
+p20
+sS'__setstate__'
+p21
+S'<built-in method __setstate__ of exceptions.NameError object>'
+p22
+sS'__reduce__'
+p23
+S'<built-in method __reduce__ of exceptions.NameError object>'
+p24
+sS'__str__'
+p25
+S"<method-wrapper '__str__' of exceptions.NameError object>"
+p26
+sS'__format__'
+p27
+S'<built-in method __format__ of exceptions.NameError object>'
+p28
+sS'__getattribute__'
+p29
+S"<method-wrapper '__getattribute__' of exceptions.NameError object>"
+p30
+sS'__class__'
+p31
+S"<type 'exceptions.NameError'>"
+p32
+sS'__unicode__'
+p33
+S'<built-in method __unicode__ of exceptions.NameError object>'
+p34
+sS'__delattr__'
+p35
+S"<method-wrapper '__delattr__' of exceptions.NameError object>"
+p36
+sS'__subclasshook__'
+p37
+S'<built-in method __subclasshook__ of type object>'
+p38
+sS'__repr__'
+p39
+S"<method-wrapper '__repr__' of exceptions.NameError object>"
+p40
+sS'args'
+p41
+S'("name \'pluginPrueba\' is not defined",)'
+p42
+sS'__dict__'
+p43
+S'{}'
+p44
+sS'__sizeof__'
+p45
+S'<built-in method __sizeof__ of exceptions.NameError object>'
+p46
+sS'__doc__'
+p47
+S"'Name not found globally.'"
+p48
+sS'__init__'
+p49
+S"<method-wrapper '__init__' of exceptions.NameError object>"
+p50
+sS'__new__'
+p51
+S'<built-in method __new__ of type object>'
+p52
+ssS'evalue'
+p53
+S"name 'pluginPrueba' is not defined"
+p54
+sS'request'
+p55
+(dp56
+S'function'
+p57
+S"'index'"
+p58
+sS'body'
+p59
+S'<cStringIO.StringO object>'
+p60
+sS'wsgi'
+p61
+S"<Storage {'start_response': <function <lambda> a...eflate', 'PATH_INFO': '/Gesdoc2/default/index'}}>"
+p62
+sS'extension'
+p63
+S"'html'"
+p64
+sS'vars'
+p65
+S'<Storage {}>'
+p66
+sS'url'
+p67
+S'<gluon.html.XML object>'
+p68
+sg41
+S'[]'
+p69
+sS'cookies'
+p70
+S"<SimpleCookie: session_id_admin='127.0.0.1-20972...'127.0.0.1-e9ba5244-a358-49d7-9115-a7e229d325b1'>"
+p71
+sS'application'
+p72
+S"'Gesdoc2'"
+p73
+sS'controller'
+p74
+S"'default'"
+p75
+sS'client'
+p76
+S"'127.0.0.1'"
+p77
+sS'is_restful'
+p78
+S'False'
+p79
+sS'env'
+p80
+S"<Storage {'debugging': False, 'http_user_agent':...': False, 'path_info': '/Gesdoc2/default/index'}>"
+p81
+sS'ajax'
+p82
+g79
+sS'get_vars'
+p83
+S'<Storage {}>'
+p84
+sS'folder'
+p85
+S"'/home/aurigadl/Documents/web2py/applications/Gesdoc2/'"
+p86
+sS'now'
+p87
+S'datetime.datetime(2007, 4, 11, 16, 45, 55, 696800)'
+p88
+sS'post_vars'
+p89
+S'<Storage {}>'
+p90
+ssS'frames'
+p91
+(lp92
+(dp93
+S'file'
+p94
+S'/home/aurigadl/Documents/web2py/gluon/restricted.py'
+p95
+sS'dump'
+p96
+(dp97
+S'environment'
+p98
+S"{'A': <class 'gluon.html.A'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'CENTER': <class 'gluon.html.CENTER'>, 'CLEANUP': <class 'gluon.validators.CLEANUP'>, 'CODE': <class 'gluon.html.CODE'>, 'CRYPT': <class 'gluon.validators.CRYPT'>, 'DAL': <class 'gluon.dal.DAL'>, ...}"
+p99
+sS'ccode'
+p100
+S'<code object <module> at 0xae502530, file "/home...ons/Gesdoc2/models/_configVariables.py", line 39>'
+p101
+ssS'lnum'
+p102
+I188
+sS'lines'
+p103
+(dp104
+I192
+S'        # XXX Show exception in Wing IDE if running in debugger'
+p105
+sI183
+S'        if type(code) == types.CodeType:'
+p106
+sI184
+S'            ccode = code'
+p107
+sI185
+S'        else:'
+p108
+sI186
+S'            ccode = compile2(code,layer)'
+p109
+sI187
+S''
+sI188
+S'        exec ccode in environment'
+p110
+sI189
+S'    except HTTP:'
+p111
+sI190
+S'        raise'
+p112
+sI191
+S'    except Exception:'
+p113
+ssS'call'
+p114
+S"(code='#-*- coding: utf-8 -*-\\n#\\n# Orfeopy, Sistema de g...db)\\ndb            = plugin_Prueba.regisPlugins()\\n', environment={'A': <class 'gluon.html.A'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'CENTER': <class 'gluon.html.CENTER'>, 'CLEANUP': <class 'gluon.validators.CLEANUP'>, 'CODE': <class 'gluon.html.CODE'>, 'CRYPT': <class 'gluon.validators.CRYPT'>, 'DAL': <class 'gluon.dal.DAL'>, ...}, layer='/home/aurigadl/Documents/web2py/applications/Gesdoc2/models/_configVariables.py')"
+p115
+sS'func'
+p116
+S'restricted'
+p117
+sa(dp118
+g94
+S'/home/aurigadl/Documents/web2py/applications/Gesdoc2/models/_configVariables.py'
+p119
+sg96
+(dp120
+S'plugin_Prueba'
+p121
+S'undefined'
+p122
+sS'globals2'
+p123
+S"<Storage {'OPTION': <class 'gluon.html.OPTION'>,... <class 'gluon.validators.IS_DECIMAL_IN_RANGE'>}>"
+p124
+sS'plugin'
+p125
+S"<module 'applications.Gesdoc2.modules.plugins' from 'applications/Gesdoc2/modules/plugins.py'>"
+p126
+sS'db'
+p127
+S"<DAL {'auth_permission': <Table {'ALL': <gluon.d...xae511b2c>}>, '_migrate': True, '_pool_size': 0}>"
+p128
+sS'plugin.plugins'
+p129
+S"<class 'applications.Gesdoc2.modules.plugins.plugins'>"
+p130
+sS'pluginPrueba'
+p131
+g122
+ssg102
+I59
+sg103
+(dp132
+I51
+S'conf       = constan.setConst(path, globals2, response)'
+p133
+sI52
+S''
+sI53
+S'db         = conf.connect_to_db()'
+p134
+sI54
+S'mail       = conf.init_mail()'
+p135
+sI55
+S''
+sI56
+S'auth       = constan.myAuth(path, globals2, db, mail)'
+p136
+sI57
+S'db         = auth.initAuth()'
+p137
+sI58
+S''
+sI59
+S'plugin_Prueba = plugin.plugins(globals2, pluginPrueba, db)'
+p138
+sI60
+S'db            = plugin_Prueba.regisPlugins()'
+p139
+ssg114
+S'()'
+p140
+sg116
+S'<module>'
+p141
+sasS'pyver'
+p142
+S'Python 2.6.5: /usr/bin/python'
+p143
+sS'session'
+p144
+(dp145
+S'auth'
+p146
+S"<Storage {'expiration': 3600, 'user': <Storage {..., 4, 11, 16, 45, 55, 696800), 'remember': False}>"
+p147
+sS'_formkey[login]'
+p148
+S"'3229ad7b-4e01-4fa6-a83d-aff8db6e8174'"
+p149
+sS'_Session__hash'
+p150
+S"'l\\xa7\\xb3\\xe4\\xd5\\x9c\\xa2\\x11\\xd1\\xa2\\xd8\\xbf\\xc5+\\x14Q'"
+p151
+ssS'etype'
+p152
+S"<type 'exceptions.NameError'>"
+p153
+sS'date'
+p154
+S'Wed Apr 11 16:45:55 2007'
+p155
+sS'response'
+p156
+(dp157
+S'files'
+p158
+S'[]'
+p159
+sg70
+S"<SimpleCookie: session_id_gesdoc2='127.0.0.1-741eaf32-5957-42dc-b4d8-254ed70bdcf2'>"
+p160
+sS'subtitle'
+p161
+S"'Sistema De Gestion Documental'"
+p162
+sS'meta'
+p163
+S"<Storage {'keywords': 'Gestion, Gestion, Documen...correlibre.org', 'author': 'aurigadl@gmail.com'}>"
+p164
+sS'_view_environment'
+p165
+S"{'A': <class 'gluon.html.A'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'CENTER': <class 'gluon.html.CENTER'>, 'CLEANUP': <class 'gluon.validators.CLEANUP'>, 'CODE': <class 'gluon.html.CODE'>, 'CRYPT': <class 'gluon.validators.CRYPT'>, 'DAL': <class 'gluon.dal.DAL'>, ...}"
+p166
+sS'keywords'
+p167
+S"'Gestion, Gestion, Documental, Documetal, orfeo, orfeopy'"
+p168
+sS'session_locked'
+p169
+S'True'
+p170
+sS'title'
+p171
+S"'Orfeopy1'"
+p172
+sS'_caller'
+p173
+S'<function <lambda>>'
+p174
+sS'flash'
+p175
+S"''"
+p176
+sS'session_file'
+p177
+S"<open file '/home/aurigadl/Documents/web2py/appl...41eaf32-5957-42dc-b4d8-254ed70bdcf2', mode 'rb+'>"
+p178
+sS'session_filename'
+p179
+S"'/home/aurigadl/Documents/web2py/applications/Ges...ns/127.0.0.1-741eaf32-5957-42dc-b4d8-254ed70bdcf2'"
+p180
+sg59
+S'<cStringIO.StringO object>'
+p181
+sS'description'
+p182
+S"'Free and open source Documental Sistem Gestion f... applications. Written and programmable in Python'"
+p183
+sS'session_id_name'
+p184
+S"'session_id_gesdoc2'"
+p185
+sS'confMenu'
+p186
+S"'Admiinstracion,Acciones,Cuenta'"
+p187
+sS'session_new'
+p188
+g79
+sS'session_id'
+p189
+S"'127.0.0.1-741eaf32-5957-42dc-b4d8-254ed70bdcf2'"
+p190
+sS'headers'
+p191
+S"<Storage {'Expires': 'Wed, 11 Apr 2007 21:45:55 ...he, must-revalidate, post-check=0, pre-check=0'}>"
+p192
+sS'status'
+p193
+S'200'
+p194
+sS'postprocessing'
+p195
+S'[]'
+p196
+sS'menu'
+p197
+S'[]'
+p198
+sS'view'
+p199
+S"'default/index.html'"
+p200
+ssS'locals'
+p201
+(dp202
+S'globals2'
+p203
+S"<Storage {'OPTION': <class 'gluon.html.OPTION'>,... <class 'gluon.validators.IS_DECIMAL_IN_RANGE'>}>"
+p204
+sS'OBJECT'
+p205
+S"<class 'gluon.html.OBJECT'>"
+p206
+sS'SQLDB'
+p207
+S"<class 'gluon.dal.DAL'>"
+p208
+sg144
+S"<Storage {'_formkey[login]': '3229ad7b-4e01-4fa6...\\xe4\\xd5\\x9c\\xa2\\x11\\xd1\\xa2\\xd8\\xbf\\xc5+\\x14Q'}>"
+p209
+sS'LINK'
+p210
+S"<class 'gluon.html.LINK'>"
+p211
+sS'BR'
+p212
+S"<class 'gluon.html.BR'>"
+p213
+sS'local_import'
+p214
+S'<function <lambda>>'
+p215
+sS'OPTGROUP'
+p216
+S"<class 'gluon.html.OPTGROUP'>"
+p217
+sS'PRE'
+p218
+S"<class 'gluon.html.PRE'>"
+p219
+sS'IS_INT_IN_RANGE'
+p220
+S"<class 'gluon.validators.IS_INT_IN_RANGE'>"
+p221
+sS'IS_LOWER'
+p222
+S"<class 'gluon.validators.IS_LOWER'>"
+p223
+sS'IS_STRONG'
+p224
+S"<class 'gluon.validators.IS_STRONG'>"
+p225
+sS'cache'
+p226
+S'<gluon.cache.Cache object>'
+p227
+sS'IS_IN_DB'
+p228
+S"<class 'gluon.validators.IS_IN_DB'>"
+p229
+sS'TAG'
+p230
+S'<gluon.html.__TAG__ object>'
+p231
+sS'SQLField'
+p232
+S"<class 'gluon.dal.Field'>"
+p233
+sS'mail'
+p234
+S'<gluon.tools.Mail object>'
+p235
+sS'BODY'
+p236
+S"<class 'gluon.html.BODY'>"
+p237
+sS'IS_DATE_IN_RANGE'
+p238
+S"<class 'gluon.validators.IS_DATE_IN_RANGE'>"
+p239
+sS'IFRAME'
+p240
+S"<class 'gluon.html.IFRAME'>"
+p241
+sS'URL'
+p242
+S'<function _URL>'
+p243
+sS'Messages'
+p244
+S"<class 'gluon.storage.Messages'>"
+p245
+sS'auth'
+p246
+S'<applications.Gesdoc2.modules.setConst.myAuth object>'
+p247
+sS'P'
+S"<class 'gluon.html.P'>"
+p248
+sS'TFOOT'
+p249
+S"<class 'gluon.html.TFOOT'>"
+p250
+sS'XHTML'
+p251
+S"<class 'gluon.html.XHTML'>"
+p252
+sS'ON'
+p253
+g170
+sS'OL'
+p254
+S"<class 'gluon.html.OL'>"
+p255
+sS'TEXTAREA'
+p256
+S"<class 'gluon.html.TEXTAREA'>"
+p257
+sS'MENU'
+p258
+S"<class 'gluon.html.MENU'>"
+p259
+sS'EM'
+p260
+S"<class 'gluon.html.EM'>"
+p261
+sS'CODE'
+p262
+S"<class 'gluon.html.CODE'>"
+p263
+sS'HTTP'
+p264
+S"<class 'gluon.http.HTTP'>"
+p265
+sS'HR'
+p266
+S"<class 'gluon.html.HR'>"
+p267
+sS'IS_DATETIME'
+p268
+S"<class 'gluon.validators.IS_DATETIME'>"
+p269
+sS'Storage'
+p270
+S"<class 'gluon.storage.Storage'>"
+p271
+sS'STYLE'
+p272
+S"<class 'gluon.html.STYLE'>"
+p273
+sS'LABEL'
+p274
+S"<class 'gluon.html.LABEL'>"
+p275
+sS'META'
+p276
+S"<class 'gluon.html.META'>"
+p277
+sS'SELECT'
+p278
+S"<class 'gluon.html.SELECT'>"
+p279
+sS'xmlFile'
+p280
+S"'config.xml'"
+p281
+sS'CENTER'
+p282
+S"<class 'gluon.html.CENTER'>"
+p283
+sS'load_storage'
+p284
+S'<function load_storage>'
+p285
+sS'constan'
+p286
+S"<module 'applications.Gesdoc2.modules.setConst' from 'applications/Gesdoc2/modules/setConst.py'>"
+p287
+sS'__builtins__'
+p288
+S"{'ArithmeticError': <type 'exceptions.ArithmeticError'>, 'AssertionError': <type 'exceptions.AssertionError'>, 'AttributeError': <type 'exceptions.AttributeError'>, 'BaseException': <type 'exceptions.BaseException'>, 'BufferError': <type 'exceptions.BufferError'>, 'BytesWarning': <type 'exceptions.BytesWarning'>, 'DeprecationWarning': <type 'exceptions.DeprecationWarning'>, 'EOFError': <type 'exceptions.EOFError'>, 'Ellipsis': Ellipsis, 'EnvironmentError': <type 'exceptions.EnvironmentError'>, ...}"
+p289
+sS'IS_LIST_OF'
+p290
+S"<class 'gluon.validators.IS_LIST_OF'>"
+p291
+sS'SQLFORM'
+p292
+S"<class 'gluon.sqlhtml.SQLFORM'>"
+p293
+sS'LOAD'
+p294
+S'<gluon.compileapp.LoadFactory object>'
+p295
+sS'redirect'
+p296
+S'<function redirect>'
+p297
+sS'FIELDSET'
+p298
+S"<class 'gluon.html.FIELDSET'>"
+p299
+sS'Settings'
+p300
+S"<class 'gluon.storage.Settings'>"
+p301
+sS'IS_EQUAL_TO'
+p302
+S"<class 'gluon.validators.IS_EQUAL_TO'>"
+p303
+sS'embed64'
+p304
+S'<function embed64>'
+p305
+sS'INPUT'
+p306
+S"<class 'gluon.html.INPUT'>"
+p307
+sS'EMBED'
+p308
+S"<class 'gluon.html.EMBED'>"
+p309
+sS'FORM'
+p310
+S"<class 'gluon.html.FORM'>"
+p311
+sS'plugin'
+p312
+S"<module 'applications.Gesdoc2.modules.plugins' from 'applications/Gesdoc2/modules/plugins.py'>"
+p313
+sS'H2'
+p314
+S"<class 'gluon.html.H2'>"
+p315
+sS'H3'
+p316
+S"<class 'gluon.html.H3'>"
+p317
+sS'H1'
+p318
+S"<class 'gluon.html.H1'>"
+p319
+sS'H6'
+p320
+S"<class 'gluon.html.H6'>"
+p321
+sS'H4'
+p322
+S"<class 'gluon.html.H4'>"
+p323
+sS'H5'
+p324
+S"<class 'gluon.html.H5'>"
+p325
+sS'UL'
+p326
+S"<class 'gluon.html.UL'>"
+p327
+sS'IS_UPPER'
+p328
+S"<class 'gluon.validators.IS_UPPER'>"
+p329
+sS'xmlescape'
+p330
+S'<function xmlescape>'
+p331
+sS'IS_TIME'
+p332
+S"<class 'gluon.validators.IS_TIME'>"
+p333
+sS'os'
+p334
+S"<module 'os' from '/usr/lib/python2.6/os.pyc'>"
+p335
+sS'OPTION'
+p336
+S"<class 'gluon.html.OPTION'>"
+p337
+sS'TITLE'
+p338
+S"<class 'gluon.html.TITLE'>"
+p339
+sS'CRYPT'
+p340
+S"<class 'gluon.validators.CRYPT'>"
+p341
+sS'IS_EMPTY_OR'
+p342
+S"<class 'gluon.validators.IS_EMPTY_OR'>"
+p343
+sS'MARKMIN'
+p344
+S"<class 'gluon.html.MARKMIN'>"
+p345
+sS'path'
+p346
+S"'/home/aurigadl/Documents/web2py/applications/Gesdoc2/private/config.xml'"
+p347
+sS'SCRIPT'
+p348
+S"<class 'gluon.html.SCRIPT'>"
+p349
+sS'TABLE'
+p350
+S"<class 'gluon.html.TABLE'>"
+p351
+sS'IS_IPV4'
+p352
+S"<class 'gluon.validators.IS_IPV4'>"
+p353
+sS'IS_LENGTH'
+p354
+S"<class 'gluon.validators.IS_LENGTH'>"
+p355
+sS'XML'
+p356
+S"<class 'gluon.html.XML'>"
+p357
+sS'B'
+S"<class 'gluon.html.B'>"
+p358
+sS'IMG'
+p359
+S"<class 'gluon.html.IMG'>"
+p360
+sS'SQLTABLE'
+p361
+S"<class 'gluon.sqlhtml.SQLTABLE'>"
+p362
+sS'IS_MATCH'
+p363
+S"<class 'gluon.validators.IS_MATCH'>"
+p364
+sS'IS_ALPHANUMERIC'
+p365
+S"<class 'gluon.validators.IS_ALPHANUMERIC'>"
+p366
+sS'StorageList'
+p367
+S"<class 'gluon.storage.StorageList'>"
+p368
+sS'copy'
+p369
+S"<module 'copy' from '/usr/lib/python2.6/copy.pyc'>"
+p370
+sS'SPAN'
+p371
+S"<class 'gluon.html.SPAN'>"
+p372
+sS'IS_SLUG'
+p373
+S"<class 'gluon.validators.IS_SLUG'>"
+p374
+sS'CLEANUP'
+p375
+S"<class 'gluon.validators.CLEANUP'>"
+p376
+sS'IS_DATE'
+p377
+S"<class 'gluon.validators.IS_DATE'>"
+p378
+sS'IS_EMAIL'
+p379
+S"<class 'gluon.validators.IS_EMAIL'>"
+p380
+sS'IS_NOT_EMPTY'
+p381
+S"<class 'gluon.validators.IS_NOT_EMPTY'>"
+p382
+sS'IS_FLOAT_IN_RANGE'
+p383
+S"<class 'gluon.validators.IS_FLOAT_IN_RANGE'>"
+p384
+sS'BEAUTIFY'
+p385
+S"<class 'gluon.html.BEAUTIFY'>"
+p386
+sS'TBODY'
+p387
+S"<class 'gluon.html.TBODY'>"
+p388
+sS'Field'
+p389
+S"<class 'gluon.dal.Field'>"
+p390
+sS'conf'
+p391
+S'<applications.Gesdoc2.modules.setConst.setConst object>'
+p392
+sS'DIV'
+p393
+S"<class 'gluon.html.DIV'>"
+p394
+sS'LEGEND'
+p395
+S"<class 'gluon.html.LEGEND'>"
+p396
+sS'DAL'
+p397
+S"<class 'gluon.dal.DAL'>"
+p398
+sS'TT'
+p399
+S"<class 'gluon.html.TT'>"
+p400
+sS'TR'
+p401
+S"<class 'gluon.html.TR'>"
+p402
+sS'LI'
+p403
+S"<class 'gluon.html.LI'>"
+p404
+sS'TH'
+p405
+S"<class 'gluon.html.TH'>"
+p406
+sS'TD'
+p407
+S"<class 'gluon.html.TD'>"
+p408
+sS'IS_URL'
+p409
+S"<class 'gluon.validators.IS_URL'>"
+p410
+sS'save_storage'
+p411
+S'<function save_storage>'
+p412
+sS'A'
+S"<class 'gluon.html.A'>"
+p413
+sS'HEAD'
+p414
+S"<class 'gluon.html.HEAD'>"
+p415
+sS'IS_DATETIME_IN_RANGE'
+p416
+S"<class 'gluon.validators.IS_DATETIME_IN_RANGE'>"
+p417
+sS'HTML'
+p418
+S"<class 'gluon.html.HTML'>"
+p419
+sS'IS_IMAGE'
+p420
+S"<class 'gluon.validators.IS_IMAGE'>"
+p421
+sS'I'
+S"<class 'gluon.html.I'>"
+p422
+sS'db'
+p423
+S"<DAL {'auth_permission': <Table {'ALL': <gluon.d...xae511b2c>}>, '_migrate': True, '_pool_size': 0}>"
+p424
+sS'List'
+p425
+S"<class 'gluon.storage.List'>"
+p426
+sS'IS_NOT_IN_DB'
+p427
+S"<class 'gluon.validators.IS_NOT_IN_DB'>"
+p428
+sg156
+S"<Storage {'body': <cStringIO.StringO object at 0...a> at 0xae505684>, 'view': 'default/index.html'}>"
+p429
+sS'THEAD'
+p430
+S"<class 'gluon.html.THEAD'>"
+p431
+sS'IS_NULL_OR'
+p432
+S"<class 'gluon.validators.IS_EMPTY_OR'>"
+p433
+sg55
+S"<Storage {'function': 'index', 'body': <cStringI... 16, 45, 55, 696800), 'post_vars': <Storage {}>}>"
+p434
+sS'IS_EXPR'
+p435
+S"<class 'gluon.validators.IS_EXPR'>"
+p436
+sS'IS_IN_SET'
+p437
+S"<class 'gluon.validators.IS_IN_SET'>"
+p438
+sS'IS_UPLOAD_FILENAME'
+p439
+S"<class 'gluon.validators.IS_UPLOAD_FILENAME'>"
+p440
+sS'IS_DECIMAL_IN_RANGE'
+p441
+S"<class 'gluon.validators.IS_DECIMAL_IN_RANGE'>"
+p442
+sS'T'
+S'<gluon.languages.translator object>'
+p443
+sssS'traceback'
+p444
+S'Traceback (most recent call last):\n  File "/home/aurigadl/Documents/web2py/gluon/restricted.py", line 188, in restricted\n    exec ccode in environment\n  File "/home/aurigadl/Documents/web2py/applications/Gesdoc2/models/_configVariables.py", line 59, in <module>\n    plugin_Prueba = plugin.plugins(globals2, pluginPrueba, db)\nNameError: name \'pluginPrueba\' is not defined\n'
+p445
+s.

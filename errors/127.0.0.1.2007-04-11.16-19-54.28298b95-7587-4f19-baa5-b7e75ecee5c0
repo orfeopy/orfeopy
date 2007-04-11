@@ -1,0 +1,20 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/aurigadl/Documents/web2py/applications/Gesdoc2/controllers/default.py'
+p4
+sS'code'
+p5
+S'# -*- coding: utf-8 -*- \n@auth.requires_login()\ndef index():\n    """\n    Pantalla inicial de la aplicacion\n    """\n    menu = plugin.navegacion(db, auth.user_id)\n    tab = menu.enlaTabs()\n    lisM = menu.getlistMenu()\n    response.flash=T("!I see you! ;-)")\n    return dict(tabs=tab, lism=lisM)\n    \ndef user():\n    """\n    Index de la aplicacion\n    Pagina mostrada para que el usuario\n    se registre o ingrese.\n    """\n    response.flash=T("!Orfeopy welcome ;-)")\n    return dict(form=auth())\n\n@auth.requires_login()\ndef controllapp():\n    """ Retorna el modulo solicitado\n        por medio de ajax"""\n    return dict()\n\nresponse._vars=response._caller(index)\n'
+p6
+sS'snapshot'
+p7
+(dp8
+sS'traceback'
+p9
+S'Traceback (most recent call last):\n  File "/home/aurigadl/Documents/web2py/gluon/restricted.py", line 188, in restricted\n    exec ccode in environment\n  File "/home/aurigadl/Documents/web2py/applications/Gesdoc2/controllers/default.py", line 28, in <module>\n  File "/home/aurigadl/Documents/web2py/gluon/globals.py", line 124, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/aurigadl/Documents/web2py/gluon/tools.py", line 2331, in f\n    return action(*a, **b)\n  File "/home/aurigadl/Documents/web2py/applications/Gesdoc2/controllers/default.py", line 7, in index\n    menu = plugin.navegacion(db, auth.user_id)\n  File "applications/Gesdoc2/modules/plugins.py", line 139, in __init__\n    self.lisM = self.listMenu()\n  File "applications/Gesdoc2/modules/plugins.py", line 149, in listMenu\n    cons2 = (db.auth_modules.auth_group_id == db.auth_membership.group_id)\n  File "/home/aurigadl/Documents/web2py/gluon/dal.py", line 3990, in __getattr__\n    return self[key]\n  File "/home/aurigadl/Documents/web2py/gluon/dal.py", line 3984, in __getitem__\n    return dict.__getitem__(self, str(key))\nKeyError: \'auth_modules\'\n'
+p10
+s.

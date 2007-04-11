@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{=T.accepted_language or 'en'}}" class="no-js"><!-- no-js need it for modernzr -->
+  <head>
+    
+    <meta charset="utf-8" />        
+    <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+    <!--[if IE]><![endif]-->    
+    <!-- Always force latest IE rendering engine 
+     (even in intranet) & Chrome Frame 
+     Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>{{=response.title or request.application}}</title>
+    
+    <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+    <meta name="application-name" content="{{=request.application}}" /> 
+    
+    <!-- Place favicon.ico and apple-touch-icon.png in the root of your domain and delete these references -->
+    <link rel="shortcut icon" href="{{=URL('static','favicon.ico')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{=URL('static','favicon.png')}}">    
+
+    {{include 'web2py_ajax.html'}}
+
+  </head>
+  
+  <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->  
+  <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+  <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+  <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+  <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
+    
+    <div class="flash">{{=response.flash or ''}}</div> <!-- notification div -->
+    
+    <!-- Pagina de carga temporal -->
+    <div id="pagload2">
+        <div id="imgload">
+            {{=IMG(_src=URL('static','favicon.png'),_alt=T('Cargando'))}}
+            <br/>
+            {{=IMG(_src=URL('static','images/loading.gif'),_alt=T('Cargando'))}}
+        </div>
+    </div>
+
+    <div id='absoAll'>
+        {{=IMG(_src=URL('static','images/fondo2.jpg'),_alt=T('Gnu-orfeopy'))}}
+    </div>
+
+    <!-- header and login nav -->
+    <div id="header"> 
+      {{block header}} <!-- this is default header -->
+      {{try:}}{{=auth.navbar(action=URL('default','user'))}}{{except:pass}}                     
+      <div style="clear: both;"></div><!-- Clear the divs -->
+      {{end}}                                     
+    </div> 
+    <!-- header  -->
+
+    <!--right marco -->
+    <div id='marco_right'>
+          <!-- content -->
+          <div id="content" title="{{=response.title or request.application}}" >
+            {{include}}   
+          </div>
+          <!-- content -->
+    </div>
+    <!--right marco -->
+
+
+    <!--left marco -->
+    <div id='marco_left'>
+        <!-- Logo lema -->
+        <div style="height:50px"></div>
+        <center>
+            <img src="{{=URL(r=request,c='static',f='images/nomorpy.png')}}"/>
+            <br/>
+             Un sistema de gestion documental de otro planeta.
+            <br/>
+             Powered by <a href="http://www.correlibre.org">correlibre.org</a>
+        </center>
+        <!-- Logo lema -->
+    </div>
+    <!--left marco -->
+
+  </body>
+</html>
