@@ -1,0 +1,13 @@
+# Can ignore specific files
+.DS_Store
+
+#Archivo de errores
+/errors
+/sessions
+
+# Use wildcards as well
+*~
+*.swp
+*.pyc
+*.bak
+*.log
