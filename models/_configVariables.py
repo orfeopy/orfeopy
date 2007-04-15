@@ -49,6 +49,7 @@ xmlFile    = 'config.xml'
 
 path       = os.path.join(request.folder,'private',xmlFile)
 conf       = constan.setConst(path, globals2, response)
+confVar    = conf.getConfigvar() 
 
 db         = conf.connect_to_db()
 mail       = conf.init_mail()
@@ -56,5 +57,5 @@ mail       = conf.init_mail()
 auth       = constan.myAuth(path, globals2, db, mail)
 db         = auth.initAuth()
 
-plugin_Prueba = plugin.plugins(globals2, db)
-db            = plugin_Prueba.regisPlugins()
+plugin_modulo = plugin.plugins(globals2, db)
+db            = plugin_modulo.regisPlugins()

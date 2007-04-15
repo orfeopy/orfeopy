@@ -48,12 +48,18 @@ class setConst(object):
     def __init__(self, file, globals, response):
         ''' Inicio de variables globales
             que pertenecen al framework'''
-            
-        datos           = ConvertXmlToDict(file)
-        self.config     = datos.config_var
+        self.file       = file   
         self.globals    = globals 
         self.response   = response
+        self.config     = self.getConfigvar() 
         self.init_web()
+
+    def getConfigvar(self):
+        ''' Retorna el diccionario con los valores
+            del archivo de configuracion xml en un
+            diccionario'''
+        datos = ConvertXmlToDict(self.file)
+        return datos.config_var
 
     def connect_to_db(self):
         ''' Coneccion a la base  de  datos '''
@@ -64,10 +70,10 @@ class setConst(object):
         ''' Configuracion del corrreo electronico
             necesario para enviar correos en el registro
             de usuarios'''
-        mail                 = Mail()                                  # mailer
-        mail.settings.server = self.config.MAIL_SERVER or 'smtp.gmail.com:587'  # your SMTP server
-        mail.settings.sender = self.config.MAIL_SERVER    # your email
-        mail.settings.login  = self.config.MAIL_LOGIN     # your credentials or None
+        mail                 = Mail() # mailer
+        mail.settings.server = self.config.MAIL_SERVER or 'smtp.gmail.com:587' # your SMTP server
+        mail.settings.sender = self.config.MAIL_SERVER # your email
+        mail.settings.login  = self.config.MAIL_LOGIN  # your credentials or None
         self.mail            = mail
         return mail
 

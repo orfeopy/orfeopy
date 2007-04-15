@@ -32,11 +32,10 @@ from gluon.sql          import *
 from gluon.html         import *
 from gluon.validators   import *
 
-
 class plugins(object):
     ''' Registra los plugin instalados
         y permite que el administrador
-        agrupe los plugins con los grupos '''
+        relacione los plugins con los grupos '''
 
     def __init__(self, globals, db):
         ''' Creamos las tablas si estas no existen '''
@@ -102,6 +101,7 @@ class plugins(object):
         self.db = db
         return db
 
+
     def insertPlugin(self, registro):
         ''' Creamos el resgistro del plugin
             en la tabla plug_plugins validando
@@ -111,7 +111,6 @@ class plugins(object):
         db  = self.db
         reg = registro
         dbp = db.plug_plugins
-        dbp.truncate()
         if not db(dbp.plug_nombre == reg["plug_nombre"]).select(dbp.plug_nombre):
             dbp.insert( plug_nombre      = reg['plug_nombre'],
                         plug_descripcion = reg['plug_descripcion'],
@@ -126,7 +125,6 @@ class plugins(object):
     def previosPlugins(self):
         pass
         
-
 class navegacion(object):
     ''' Elementos necesarios para crear los tabs
         los elementos que estos los componen como los

@@ -12,4 +12,4 @@ pluginPrueba['plug_descripcion']   = "permite ver como se  configuran \
                                 en la aplicacion se puedan integrar \
                                 sin alterar la  estructura"
 
-plugin_Prueba.insertPlugin(pluginPrueba)
+plugin_modulo.insertPlugin(pluginPrueba)

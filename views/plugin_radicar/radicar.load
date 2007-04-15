@@ -1,0 +1,3 @@
+{{#extend 'layout.html' <- notice this is commented out!}}
+<h1>Radicar :)</h1>
+{{=form}}
