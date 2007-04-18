@@ -50,24 +50,23 @@ class modRadicar(object):
         #Definicion de tabla para ubicacion geografica
 
         #Tabla de Continente
-        db.define_table('sgd_pa_cont_continente',
-            Field('cont_nombre', label=T('Continente')))
+        db.define_table('sgd_cont_continente',
+            Field('cont_nombre'),format = '%(cont_nombre)s')
 
-        dbc = db.sgd_pa_cont_continente.cont_nombre
+        dbc = db.sgd_cont_continente.cont_nombre
 
         # Restriccion de la tabla continente
         dbc.writable = False
         dbc.required = True
         dbc.notnull  = True
         dbc.requires = IS_NOT_EMPTY()
-        dbc.format   = '%(cont_nombre)s'
+        dbc.label    = T('Continente')
 
         #Tabla de pais
-        db.define_table('sgd_pa_pais',
+        db.define_table('sgd_pais',
             Field('pais_nombre'),
-            Field('sgd_pa_cont_continente', 
-                    db.sgd_pa_cont_continente, 
-                    label=T('Continente')))
+            Field('sgd_cont_continente', 
+                    db.sgd_cont_continente), format='%(pais_nombre)s')
 
         dbpa = db.sgd_pa_pais.nombre
         dbpc = db.sgd_pa_pais.continente
@@ -77,28 +76,40 @@ class modRadicar(object):
         dbpa.required = True
         dbpa.unique   = True
         dbpa.notnull  = True
-        dbpa.label    = "pais"
+        dbpa.label    = label=T('pais'))
         dbpa.requires = IS_NOT_EMPTY()
         dbpc.writable = False
         dbpc.required = True
-        dbpc.notnull  = True)
-        dbpc.format   = '%(pais_nombre)s'
+        dbpc.notnull  = True
 
         #Tabla de departamento 
-        db.define_table('sgd_pa_depa_departamento',
-            Field('depa_nombre', writable=False, required=True, unique=True, notnull=True,requires=IS_NOT_EMPTY()),
-            Field('sgd_pa_pais',db.sgd_pa_pais, writable=False, required=True, notnull=True), format='%(depa_nombre)s')
+        db.define_table('sgd_depa_departamento',
+            Field('depa_nombre'),
+            Field('sgd_pais', db.sgd_pa_pais), format='%(depa_nombre)s')
             
+        dbdn = db.sgd_depa_departamento.depa_nombre
+        dbdp = db.sgd_depa_departamento.sgd_pais
+
+        dbdn.writable       = False
+        dbdn.required       = True
+        dbdn.unique         = True
+        dbdn.notnull        = True
+        dbdn.requires       = IS_NOT_EMPTY()
+
+        dbdp.writable       = False
+        dbdp.required       = True
+        dbdp.notnull        = True
+
         #Tabla de municipio
-        db.define_table('sgd_pa_muni_municipio',
+        db.define_table('sgd_muni_municipio',
             Field('muni_nombre',writable=False, required=True, unique=True, notnull=True, requires=IS_NOT_EMPTY()),
-            Field('sgd_pa_depa_departamento',db.sgd_pa_depa_departamento, writable=False, required=True, notnull=True), format='%(muni_nombre)s')
+            Field('sgd_depa_departamento',db.sgd_pa_depa_departamento, writable=False, required=True, notnull=True), format='%(muni_nombre)s')
 
         #Tabla de directorio
-        db.define_table('sgd_di_dire_directorio',
+        db.define_table('sgd_dire_directorio',
             Field('dire_nombre', 'string', label="Nombre",notnull=True,required=True, requires=[IS_NOT_EMPTY(),IS_UPPER()]),
             Field('dire_identificacion','string', label="No identificación",requires=IS_ALPHANUMERIC()),
-            Field('sgd_pa_muni_municipio',db.sgd_pa_muni_municipio, notnull=True, label="Ubicación"),
+            Field('sgd_muni_municipio',db.sgd_pa_muni_municipio, notnull=True, label="Ubicación"),
             Field('dire_direccion','string',label="Dirección", notnull=True, required=True, requires=[IS_NOT_EMPTY()]),
             Field('dire_telefono','integer', label="Telefono", notnull=True, required=True, requires=[IS_NOT_EMPTY(),IS_LENGTH(minsize=6)]),
             Field('dire_email', label="E-mail", requires=IS_EMAIL()),
@@ -107,10 +118,11 @@ class modRadicar(object):
 
         #Tabla para generar radicación
         db.define_table('sgd_radi_radicado',
-            Field('radi_radicado','integer',required=True, unique=True,writable=False, readable=False),
+            Field('radi_radicado','integer', unique=True,writable=False, readable=False),
             Field('auth_user_radicador', db.auth_user, default=auth.user_id,writable=False, readable=False  ,required=True),
             Field('auth_user_actual', db.auth_user, required=True),
             Field('radi_fechaCreado', 'datetime', default=request.now, writable=False, readable=False),
             Field('radi_fechaRadicado', 'datetime', writable=False, readable=False),
             Field('radi_activo','boolean',default=True, writable=False, readable=False),
+            Field('radi_tipo','integer', writable=False, readable=False),
             Field('dire_id',db.sgd_di_dire_directorio,label='Remitente'))
