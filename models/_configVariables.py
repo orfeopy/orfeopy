@@ -55,7 +55,7 @@ db         = conf.connect_to_db()
 mail       = conf.init_mail()
 
 auth       = constan.myAuth(path, globals2, db, mail)
-db         = auth.initAuth()
+auth.initAuth()
 
 plugin_modulo = plugin.plugins(globals2, db)
-db            = plugin_modulo.regisPlugins()
+plugin_modulo.regisPlugins()

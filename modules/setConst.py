@@ -179,7 +179,6 @@ class myAuth(Auth):
         self.messages.reset_password = 'Click on the link http://'+request.env.http_host+\
             URL(r=request,c='default',f='user',args=['reset_password'])+\
             '/%(key)s to reset your password'
-        return db
     
     def setMessa(self):
         ''' Configuracion de los mensajes suministrados al

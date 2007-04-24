@@ -31,6 +31,7 @@ from gluon.tools        import Auth
 from gluon.sql          import *
 from gluon.html         import *
 from gluon.validators   import *
+from xmlConv            import *
 
 class plugins(object):
     ''' Registra los plugin instalados
@@ -99,14 +100,12 @@ class plugins(object):
         db.auth_modules.plug_plugins_id.requires = IS_IN_DB(db, 'plug_plugins.id',
                 '%(plug_nombre)s', zero=T('Selecciona uno'))
         self.db = db
-        return db
 
-
-    def insertPlugin(self, registro):
+    def insertPlugin(self):
         ''' Creamos el resgistro del plugin
             en la tabla plug_plugins validando
-            los campos suministrados en diccionario
-            registro'''
+            los campos suministrados en el 
+            archivo de registro'''
             
         db  = self.db
         reg = registro
@@ -125,6 +124,19 @@ class plugins(object):
     def previosPlugins(self):
         pass
         
+    def setConfigvar(self, file):
+        ''' Genera el diccionario con los valores
+            del archivo de configuracion xml en un
+            diccionario'''
+        datos = ConvertXmlToDict(file)
+        self.config_var = datos.config_var
+
+    def getConfigvar(self):
+        ''' Retorna con los valores
+            del archivo de configuracion xml en un
+            diccionario'''
+        return self.config_var
+
 class navegacion(object):
     ''' Elementos necesarios para crear los tabs
         los elementos que estos los componen como los

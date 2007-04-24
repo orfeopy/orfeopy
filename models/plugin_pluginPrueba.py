@@ -10,6 +10,6 @@ pluginPrueba['plug_tip']           = "plugin de prueba" #Mensaje que sale al sel
 pluginPrueba['plug_descripcion']   = "permite ver como se  configuran \
                                 los modulos y los parametros para que \
                                 en la aplicacion se puedan integrar \
-                                sin alterar la  estructura"
+                                modulo de prueba"
 
 plugin_modulo.insertPlugin(pluginPrueba)
