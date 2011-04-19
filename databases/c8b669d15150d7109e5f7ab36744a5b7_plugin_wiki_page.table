@@ -1,0 +1,50 @@
+(dp1
+S'body'
+p2
+S'TEXT'
+p3
+sS'slug'
+p4
+S'CHAR(512)'
+p5
+sS'modified_by'
+p6
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p7
+sS'title'
+p8
+S'CHAR(512)'
+p9
+sS'changelog'
+p10
+S'CHAR(512)'
+p11
+sS'created_by'
+p12
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p13
+sS'id'
+p14
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p15
+sS'modified_on'
+p16
+S'TIMESTAMP'
+p17
+sS'created_on'
+p18
+S'TIMESTAMP'
+p19
+sS'role'
+p20
+S'INTEGER REFERENCES auth_group(id) ON DELETE CASCADE'
+p21
+sS'active'
+p22
+S'CHAR(1)'
+p23
+sS'public'
+p24
+S'CHAR(1)'
+p25
+s.

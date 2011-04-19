@@ -1,0 +1,21 @@
+{{extend 'plantilla_inicio.html'}}
+
+{{block defTabs}}
+    {{for t in tabs:}}{{=LI(A(t, _href="#" + 'icon_' +  t))}}{{pass}}
+{{end}}
+
+{{block defTabsCont}}
+    {{for t in tabs:}}
+        {{for x in lism:}}
+            {{if x['plug_tab'] == t:}}
+                {{=A(IMG(_src=URL('static/' + x['plug_nombre'] + '/images', 
+                    x['plug_icono'] + '.png'), _alt=x['plug_tip']),
+                _href=URL(x['plug_nombre'],'index.load'), cid='content', 
+                    _id='icon_'+t, _title=x['plug_tip'] + ' - ' + x['plug_descripcion'])}} 
+            {{pass}}
+        {{pass}}
+    {{pass}}
+{{end}}
+
+{{block divContent}}
+{{end}}

@@ -1,0 +1,2350 @@
+timestamp: 2010-11-09T13:20:19.600000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512)
+);
+success!
+timestamp: 2010-11-09T13:20:19.677000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2010-11-09T13:20:19.755000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2010-11-09T13:20:19.849000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2010-11-09T13:20:20.020000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2010-11-09T13:25:09.782000
+CREATE TABLE auth_user(
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512)
+);
+success!
+timestamp: 2010-11-09T13:25:10.686000
+CREATE TABLE auth_group(
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2010-11-09T13:25:10.889000
+CREATE TABLE auth_membership(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2010-11-09T13:25:11.029000
+CREATE TABLE auth_permission(
+    id SERIAL PRIMARY KEY,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2010-11-09T13:25:11.138000
+CREATE TABLE auth_event(
+    id SERIAL PRIMARY KEY,
+    time_stamp TIMESTAMP,
+    client_ip VARCHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2010-11-09T17:48:18.158000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512)
+);
+success!
+timestamp: 2010-11-09T17:48:18.407000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY,
+    role VARCHAR(512),
+    description BLOB SUB_TYPE 1
+);
+success!
+timestamp: 2010-11-09T17:48:18.438000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2010-11-09T17:48:18.532000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2010-11-09T17:48:18.579000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY,
+    time_stamp TIMESTAMP,
+    client_ip VARCHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description BLOB SUB_TYPE 1
+);
+success!
+timestamp: 2010-11-11T16:49:22.025000
+CREATE TABLE plugin_wiki_page(
+    id INTEGER PRIMARY KEY,
+    slug VARCHAR(512),
+    title VARCHAR(512),
+    active CHAR(1),
+    public CHAR(1),
+    body BLOB SUB_TYPE 1,
+    role INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    changelog VARCHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-11T16:49:22.275000
+CREATE TABLE plugin_wiki_page_archive(
+    id INTEGER PRIMARY KEY,
+    current_record INTEGER REFERENCES plugin_wiki_page(id) ON DELETE CASCADE,
+    slug VARCHAR(512),
+    title VARCHAR(512),
+    active CHAR(1),
+    public CHAR(1),
+    body BLOB SUB_TYPE 1,
+    role INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    changelog VARCHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-11T16:49:22.337000
+CREATE TABLE plugin_wiki_attachment(
+    id INTEGER PRIMARY KEY,
+    tablename VARCHAR(512),
+    record_id INTEGER,
+    name VARCHAR(512),
+    file VARCHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-11T16:49:22.400000
+CREATE TABLE plugin_wiki_comment(
+    id INTEGER PRIMARY KEY,
+    tablename VARCHAR(512),
+    record_id INTEGER,
+    body VARCHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-11T16:49:22.446000
+CREATE TABLE plugin_wiki_tag(
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(512),
+    links INTEGER,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-11T16:49:22.493000
+CREATE TABLE plugin_wiki_link(
+    id INTEGER PRIMARY KEY,
+    tag INTEGER REFERENCES plugin_wiki_tag(id) ON DELETE CASCADE,
+    table_name VARCHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2010-11-16T11:57:01.269000
+CREATE TABLE plugin_wiki_page(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug CHAR(512),
+    title CHAR(512),
+    active CHAR(1),
+    public CHAR(1),
+    body TEXT,
+    role INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    changelog CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-16T11:57:01.363000
+CREATE TABLE plugin_wiki_page_archive(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    current_record INTEGER REFERENCES plugin_wiki_page(id) ON DELETE CASCADE,
+    slug CHAR(512),
+    title CHAR(512),
+    active CHAR(1),
+    public CHAR(1),
+    body TEXT,
+    role INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    changelog CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-16T11:57:01.456000
+CREATE TABLE plugin_wiki_attachment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tablename CHAR(512),
+    record_id INTEGER,
+    name CHAR(512),
+    file CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-16T11:57:01.566000
+CREATE TABLE plugin_wiki_comment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tablename CHAR(512),
+    record_id INTEGER,
+    body CHAR(512),
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-16T11:57:01.675000
+CREATE TABLE plugin_wiki_tag(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    links INTEGER,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP
+);
+success!
+timestamp: 2010-11-16T11:57:01.863000
+CREATE TABLE plugin_wiki_link(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tag INTEGER REFERENCES plugin_wiki_tag(id) ON DELETE CASCADE,
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2011-03-09T14:59:40.132489
+ALTER TABLE auth_user ADD registration_id CHAR(512);
+timestamp: 2011-03-09T14:59:40.345154
+ALTER TABLE auth_user ADD created_on TIMESTAMP;
+timestamp: 2011-03-09T14:59:40.433849
+ALTER TABLE auth_user ADD site_language CHAR(128);
+timestamp: 2011-03-19T15:00:18.495115
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512)
+);
+success!
+timestamp: 2011-03-22T08:41:06.448000
+CREATE TABLE plug_plugins(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    plug_nombre CHAR(512),
+    plug_descripcion CHAR(512),
+    plug_fecha TIMESTAMP,
+    plug_autor CHAR(512),
+    plug_icono CHAR(512),
+    plug_enlace CHAR(512),
+    plug_prevPlugins TEXT,
+    plug_nombPlugin CHAR(512)
+);
+success!
+timestamp: 2011-03-24T10:38:03.739000
+CREATE TABLE auth_modules(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    plug_plugins_id CHAR(512),
+    auth_group_id CHAR(512)
+);
+success!
+timestamp: 2011-03-25T08:57:06.708000
+ALTER TABLE plug_plugins ADD plug_tip CHAR(512);
+timestamp: 2011-03-25T08:57:06.833000
+ALTER TABLE plug_plugins ADD plug_tab CHAR(512);
+timestamp: 2011-03-26T09:59:53.734515
+ALTER TABLE plug_plugins ADD plug_version CHAR(512);
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
+DELETE FROM plug_plugins;
+DELETE FROM sqlite_sequence WHERE name='plug_plugins';
+success!
