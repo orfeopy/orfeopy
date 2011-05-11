@@ -40,7 +40,6 @@ from gluon.sqlhtml      import *
 from gluon.sql          import *
 from xmlConv            import *
 
-
 class setConst(object):
     ''' Asigna las variables del archivo
         suministrado al sistema. '''
@@ -215,7 +214,7 @@ class myAuth(Auth):
 
         # list1 grupos a los cuales el usuario pertenece
         query1 = db.auth_membership.user_id == user_id 
-        list1  = db(query1).select(memb)
+        list1  = db(query1).select(memb, distinct=True)
         grupUs = [int(p.group_id) for p in list1] 
 
         # id del plugin suministrado
@@ -239,3 +238,31 @@ class myAuth(Auth):
             self.log_event(log % dict(user_id=user_id, 
                                 group_id=group_id, check=r)) 
         return r 
+
+    def relausuaSubplug(self, plug_name, pref, user_id=None):
+        ''' Retorna datos existentes entre un usuario 
+            y un subplugin 
+            plug_name: Nombre del plugin a evaluar
+            plug_pref: Permiso a consultar del plugin
+            user_id: Usuario registrado que se evalua'''
+
+        db            = self.db
+        memb          = db.subp_plugins.subp_dato 
+
+        if not user_id and self.user: 
+            user_id = self.user.id 
+
+        # grupos a los cuales el usuario pertenece
+        qur1 = db.auth_membership.user_id  == user_id 
+        qur2 = db.auth_membership.group_id == db.auth_modules.auth_group_id 
+        qur4 = db.plug_plugins.plug_nombre == plug_name 
+        qur5 = db.plug_plugins.id == db.auth_modules.plug_plugins_id 
+        qur6 = db.subp_plugins.plug_plugins_id == db.auth_modules.plug_plugins_id 
+        qur7 = db.subp_plugins.subp_pref == pref
+        qur8 = db.auth_submodules.subp_plugins_id == db.subp_plugins.id
+        qur9 = db.auth_submodules.auth_group_id == db.auth_membership.group_id
+
+        list1  = db(qur1 & qur2 & qur4 & qur5 & qur6 & qur7 & qur8 & qur9).select(memb, distinct=True)
+        grupUs = list1.as_list()
+
+        return grupUs

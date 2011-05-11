@@ -542,6 +542,9 @@ div#tab ui-widget-content {
     background-color: white;
 } 
 
+.menutabs{
+	float: left;
+}
 
 
 #tooltip.fancy h3 {

@@ -67,10 +67,6 @@ class plugins(object):
             Field('plug_tab'        , label=T('Tab')),
             Field('plug_version'    , label=T('Version')))
 
-        #Define tabla relacion plugin y grupo
-        db.define_table('auth_modules',
-            Field('plug_plugins_id', 'integer' , db.plug_plugins.id),
-            Field('auth_group_id'  , 'integer' , db.auth_group.id))
 
         # response.confMenu viene de setConst.py
         menu = response.confMenu.split(',')
@@ -93,15 +89,58 @@ class plugins(object):
         dbp.plug_tab.requires       = IS_IN_SET(menu, zero= T('Selecciona uno'))
         dbp.plug_tab.default        = 'Acciones' 
 
+        #Define tabla relacion plugin y grupo
+        db.define_table('auth_modules',
+            Field('plug_plugins_id', 'integer' , db.plug_plugins.id),
+            Field('auth_group_id'  , 'integer' , db.auth_group.id))
+
         #Restricciones de la tabla modules
         db.auth_modules.auth_group_id.requires = IS_IN_DB(db, 'auth_group.id',
                 '%(role)s', zero=T('Selecciona uno'))
 
         db.auth_modules.plug_plugins_id.requires = IS_IN_DB(db, 'plug_plugins.id',
                 '%(plug_nombre)s', zero=T('Selecciona uno'))
+                
+
+        #Define tabla sub_plugins
+        db.define_table('subp_plugins',
+            Field('plug_plugins_id' , 'integer' , db.plug_plugins.id),
+            Field('subp_pref'   	, label=T('prefijo')),
+            Field('subp_nombre'   	, label=T('Nombre')),
+            Field('subp_descripcion', label=T('Descripcion')),
+            Field('subp_dato'       , label=T('Variable')),
+            )
+
+        dbs = db.subp_plugins 
+
+        # Restriccion de la tabla sub_plugins
+        dbs.subp_nombre.requires        = IS_NOT_IN_DB(db, 'subp_plugins.subp_pref'
+                                            ,'subp_plugins.subp_nombre'
+                                            ,'subp_plugins.subp_dato')
+        dbs.subp_nombre.writable        = False
+        dbs.plug_plugins_id.requires    = IS_IN_DB(db, 'plug_plugins.id',
+                '%(role)s', zero=T('Selecciona uno'))
+        dbs.subp_pref.required        = True
+        dbs.subp_nombre.required      = True
+        dbs.subp_descripcion.required = True
+        dbs.subp_dato.required        = True
+        dbs.plug_plugins_id.required  = True
+
+        #Define tabla relacion sub_plugin y grupo
+        db.define_table('auth_submodules',
+            Field('subp_plugins_id', 'integer' , db.subp_plugins.id),
+            Field('auth_group_id'  , 'integer' , db.auth_group.id))
+
+        #Restricciones de la tabla submodules
+        db.auth_submodules.auth_group_id.requires = IS_IN_DB(db, 'auth_group.id',
+                '%(role)s', zero=T('Selecciona uno'))
+
+        db.auth_submodules.subp_plugins_id.requires = IS_IN_DB(db, 'subp_plugins.id',
+                '%(subp_nombre)s', zero=T('Selecciona uno'))
+
         self.db = db
 
-    def insertPlugin(self):
+    def insertPlugin(self, registro):
         ''' Creamos el resgistro del plugin
             en la tabla plug_plugins validando
             los campos suministrados en el 
@@ -110,7 +149,10 @@ class plugins(object):
         db  = self.db
         reg = registro
         dbp = db.plug_plugins
-        if not db(dbp.plug_nombre == reg["plug_nombre"]).select(dbp.plug_nombre):
+
+        row = db(dbp.plug_nombre == reg["plug_nombre"]).select(dbp.id).first()
+        
+        if not row:
             dbp.insert( plug_nombre      = reg['plug_nombre'],
                         plug_descripcion = reg['plug_descripcion'],
                         plug_autor       = reg['plug_autor'],
@@ -120,6 +162,37 @@ class plugins(object):
                         plug_prevPlugins = reg['plug_prevPlugins'],
                         plug_version     = reg['plug_version']
                       )
+            row = db(dbp.plug_nombre == reg["plug_nombre"]).select(dbp.id).first()
+        self.plugid = row
+
+    def getidPlugin(self):
+        return self.plugid         
+
+    def insertSubPlugin(self, registro):
+        ''' Creamos el resgistro del subplugin
+            en la tabla subp_plugins validando
+            los campos suministrados en el 
+            archivo de registro'''
+            
+        db  = self.db
+        reg = registro
+        dbp = db.subp_plugins
+
+        qu1 = dbp.subp_pref == reg['subp_pref']
+        qu2 = dbp.subp_dato == reg['subp_dato']
+        qu3 = dbp.plug_plugins_id ==  self.plugid
+
+        row = db(qu1 & qu2 & qu3).select(dbp.id).first()
+
+        if not row:
+            dbp.insert( 
+                        plug_plugins_id  = self.plugid,  
+                        subp_pref        = reg['subp_pref'],
+                        subp_nombre      = reg['subp_nombre'],
+                        subp_descripcion = reg['subp_descripcion'],
+                        subp_dato        = reg['subp_dato']
+                      )
+        
 
     def previosPlugins(self):
         pass
@@ -172,4 +245,5 @@ class navegacion(object):
         """ Retorna lista con  los tabs que de los  plugins
             a los cuales el usuario pretenece"""
         tabs = self.lisM 
-        return [t['plug_tab']for t in tabs]
+        return list(set([t['plug_tab']for t in tabs]))
+
