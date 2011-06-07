@@ -1,0 +1,10 @@
+<link href="{{=URL('static','plugin_radicar/css/radicar.css')}}" rel="stylesheet" type="text/css" />
+<div id="bodyx">
+    <div id="left">
+        <h1>Formulario de Radicación :)</h1>
+        {{=form1}}
+    </div>
+    <div id="right">
+        {{=LOAD('plugin_radicar','directorio.load',ajax=True)}}
+    </div>
+</div>

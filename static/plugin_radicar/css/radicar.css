@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#bodyx{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    width: 100%;
+
+}
+
+#left{
+    width: 50%;
+    float: left;
+}
+
+#right{
+    margin-left: 10px;
+} 

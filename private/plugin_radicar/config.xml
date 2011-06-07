@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_var>
+    <plug_nombre>plugin_radicar</plug_nombre>   
+	<plug_autor>aurigadl@gmail.com</plug_autor>   
+    <plug_icono>radicar</plug_icono>    
+    <plug_enlace>www.correlibre.org</plug_enlace>    
+	<plug_prevPlugins></plug_prevPlugins>
+	<plug_version>0.001</plug_version>    
+	<plug_tip>radicar</plug_tip>    
+	<plug_descripcion>generar nuevos registros de documentos</plug_descripcion>    
+	<plug_subplugin>
+        <subp_pref>trad</subp_pref>
+        <subp_nombre>entrada</subp_nombre>
+        <subp_descripcion>generar radicados de entrada</subp_descripcion>
+        <subp_dato>01</subp_dato>
+	</plug_subplugin>
+	<plug_subplugin>
+        <subp_pref>trad</subp_pref>
+        <subp_nombre>salida</subp_nombre>
+        <subp_descripcion>generar radicados de salida</subp_descripcion>
+        <subp_dato>02</subp_dato>
+	</plug_subplugin>
+</config_var>
