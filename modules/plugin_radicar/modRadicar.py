@@ -27,6 +27,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from datetime           import date
+from gluon.tools        import Auth    
+from gluon.sql          import *
+from gluon.validators   import *
+
 class modRadicar(object):
     ''' Registro de documentos y asignacion de 
         consecutivo temporal y oficial.
@@ -37,6 +42,7 @@ class modRadicar(object):
         self.globals = globals 
         self.db      = db 
         self.config  = confVar
+        self.initRadi()
 
     def initRadi(self):
         ''' Configuracion de las tablas y parametros
@@ -46,12 +52,12 @@ class modRadicar(object):
         globals = self.globals
         T       = globals.T 
 
-        widgetCascading = local_import('plugin_directorio/widgetCascading')
+        widgetCascading = globals.local_import('plugin_radicar/widgetCascading')
         #Definicion de tabla para ubicacion geografica
 
         #Tabla de Continente
         db.define_table('sgd_cont_continente',
-            Field('cont_nombre'),format = '%(cont_nombre)s')
+            Field('cont_nombre'), format = '%(cont_nombre)s')
 
         db_c = db.sgd_cont_continente.cont_nombre
 
@@ -68,8 +74,8 @@ class modRadicar(object):
             Field('sgd_cont_continente', 
                     db.sgd_cont_continente), format='%(pais_nombre)s')
 
-        dbp_a = db.sgd_pa_pais.nombre
-        dbp_c = db.sgd_pa_pais.continente
+        dbp_a = db.sgd_pais.pais_nombre
+        dbp_c = db.sgd_pais.sgd_cont_continente
 
         # Restriccion de la tabla pais 
         dbp_a.writable = False
@@ -85,7 +91,7 @@ class modRadicar(object):
         #Tabla de departamento 
         db.define_table('sgd_depa_departamento',
             Field('depa_nombre'),
-            Field('sgd_pais', db.sgd_pa_pais)
+            Field('sgd_pais', db.sgd_pais)
                     , format='%(depa_nombre)s')
             
         dbd_n = db.sgd_depa_departamento.depa_nombre
@@ -105,7 +111,7 @@ class modRadicar(object):
         #Tabla de municipio
         db.define_table('sgd_muni_municipio',
             Field('muni_nombre'),
-            Field('sgd_depa_departamento',db.sgd_pa_depa_departamento)
+            Field('sgd_depa_departamento',db.sgd_depa_departamento)
                   , format='%(muni_nombre)s')
 
 
@@ -183,7 +189,7 @@ class modRadicar(object):
             Field('radi_fechaRadicado', 'datetime'),
             Field('radi_activo','boolean'),
             Field('radi_tipo','integer'),
-            Field('dire_id',db.sgd_di_dire_directorio))
+            Field('sgd_dire_directorio',db.sgd_dire_directorio))
 
         #Restriccion de radicado 
         dbr_rd = db.sgd_radi_radicado.radi_radicado
@@ -193,20 +199,18 @@ class modRadicar(object):
         dbr_fr = db.sgd_radi_radicado.radi_fechaRadicado
         dbr_ra = db.sgd_radi_radicado.radi_activo
         dbr_rt = db.sgd_radi_radicado.radi_tipo
-        dbr_di = db.sgd_radi_radicado.dire_id  
+        dbr_di = db.sgd_radi_radicado.sgd_dire_directorio  
 
         dbr_rd.unique   = True
         dbr_rd.ritable  = False
         dbr_rd.readable = False
 
-        dbr_us.default  = auth.user_id
         dbr_us.writable = False
         dbr_us.eadable  = False
         dbr_us.equired  = True
 
         dbr_ua.required = True
 
-        dbr_fc.default  = request.now
         dbr_fc.ritable  = False
         dbr_fc.eadable  = False
 
@@ -223,17 +227,17 @@ class modRadicar(object):
         dbr_di.label    = T('Remitente')
 
         #Tabla para historico radicado
-        db.define_table('sgd_radi_radicado',
-            Field('radi_radicado','integer'),
-            Field('auth_user_radicador', db.auth_user),
-            Field('auth_user_actual', db.auth_user),
-            Field('radi_fechaCreado', 'datetime'),
-            Field('radi_fechaRadicado', 'datetime'),
-            Field('radi_activo','boolean'),
-            Field('radi_tipo','integer'),
-            Field('dire_id',db.sgd_di_dire_directorio))
+        db.define_table('sgd_radh_radihist',
+            Field('sgd_radi_radicado',db.sgd_radi_radicado),
+            Field('radh_fecha', 'datetime'))
 
-        #Restriccion de historico radicado 
+    #Generar numero de radicado
+    def numRadi(object):
+        ano_actu = date.today().year
+        rows     = db(db.sgd_radi_radicado).select(db.sgd_radi_radicado.id)
+        last_row = rows.last()
+        form.vars.radi_radicado = str(ano_actu) + str(int(last_row) + 1)
 
-    def radiFormat(objet):
+    #Restriccion de historico radicado 
+    def radiFormat(object):
         pass

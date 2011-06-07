@@ -50,15 +50,19 @@ class setConst(object):
         self.file       = file   
         self.globals    = globals 
         self.response   = response
-        self.config     = self.getConfigvar() 
+        dicTmp          = self.getConfigvar() 
+        self.config     = dicTmp.config_var
         self.init_web()
 
+    def setConfile(self, file):
+        self.file  = file   
+        
     def getConfigvar(self):
         ''' Retorna el diccionario con los valores
             del archivo de configuracion xml en un
             diccionario'''
         datos = ConvertXmlToDict(self.file)
-        return datos.config_var
+        return datos
 
     def connect_to_db(self):
         ''' Coneccion a la base  de  datos '''
@@ -248,6 +252,7 @@ class myAuth(Auth):
 
         db            = self.db
         memb          = db.subp_plugins.subp_dato 
+        memn          = db.subp_plugins.subp_nombre 
 
         if not user_id and self.user: 
             user_id = self.user.id 
@@ -262,7 +267,7 @@ class myAuth(Auth):
         qur8 = db.auth_submodules.subp_plugins_id == db.subp_plugins.id
         qur9 = db.auth_submodules.auth_group_id == db.auth_membership.group_id
 
-        list1  = db(qur1 & qur2 & qur4 & qur5 & qur6 & qur7 & qur8 & qur9).select(memb, distinct=True)
+        list1  = db(qur1 & qur2 & qur4 & qur5 & qur6 & qur7 & qur8 & qur9).select(memb,memn,distinct=True)
         grupUs = list1.as_list()
 
         return grupUs

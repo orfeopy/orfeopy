@@ -371,7 +371,7 @@ h6 {font-size: 0.8em;}
 
 #right_sidebar { width: 160px; float:right; display: none; }
 #left_sidebar { width: 160px; float:left; display: none; }
-#content { float: left; margin: 8px;/*width: 740px;*//*width: 63%;*/ /*width: 640px; float:left;*/ } /* uncomment this if you are going to use sidebars */
+#content { float: left; margin: 8px; width:100%;/*width: 740px;*//*width: 63%;*/ /*width: 640px; float:left;*/ } /* uncomment this if you are going to use sidebars */
  
 .auth_navbar {
    color: white;

@@ -193,22 +193,8 @@ class plugins(object):
                         subp_dato        = reg['subp_dato']
                       )
         
-
     def previosPlugins(self):
         pass
-        
-    def setConfigvar(self, file):
-        ''' Genera el diccionario con los valores
-            del archivo de configuracion xml en un
-            diccionario'''
-        datos = ConvertXmlToDict(file)
-        self.config_var = datos.config_var
-
-    def getConfigvar(self):
-        ''' Retorna con los valores
-            del archivo de configuracion xml en un
-            diccionario'''
-        return self.config_var
 
 class navegacion(object):
     ''' Elementos necesarios para crear los tabs
