@@ -4,11 +4,12 @@
 #Archivo de errores
 /errors
 /sessions
-
+/databases
 # Use wildcards as well
 *~
 *.swp
 *.pyc
 *.bak
 *.log
+
 \\
