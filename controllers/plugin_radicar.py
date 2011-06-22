@@ -27,7 +27,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-validarMod = auth.relacionUsuaplug(pluginPrueba['plug_nombre'])
+validarMod = auth.relacionUsuaplug(xmlc['plug_nombre'])
 
 @auth.requires(validarMod)
 def index():
@@ -51,4 +51,3 @@ def directorio():
     else:
         response.flash = T('Formulario de radicacac&oacute;n')
     return dict(form2=form2)
-    

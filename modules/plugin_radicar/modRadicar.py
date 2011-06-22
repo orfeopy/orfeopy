@@ -52,7 +52,7 @@ class modRadicar(object):
         globals = self.globals
         T       = globals.T 
 
-        widgetCascading = globals.local_import('plugin_radicar/widgetCascading')
+        widget = globals.local_import('plugin_radicar/widgetCascading')
         #Definicion de tabla para ubicacion geografica
 
         #Tabla de Continente
@@ -97,7 +97,7 @@ class modRadicar(object):
         dbd_n = db.sgd_depa_departamento.depa_nombre
         dbd_p = db.sgd_depa_departamento.sgd_pais
 
-        # Restriccion de la departamento 
+        # Restriccion del departamento 
         dbd_n.writable       = False
         dbd_n.required       = True
         dbd_n.unique         = True
@@ -141,6 +141,11 @@ class modRadicar(object):
             Field('dire_tipo', 'boolean'), format='%(dire_nombre)s')
  
         #Restriccion de directorio
+        cascade = widget.CascadingSelect(db.sgd_cont_continente,
+                                  db.sgd_pais,
+                                  db.sgd_depa_departamento,
+                                  db.sgd_muni_municipio)
+
         dbdir_n = db.sgd_dire_directorio.dire_nombre
         dbdir_i = db.sgd_dire_directorio.dire_identificacion
         dbdir_m = db.sgd_dire_directorio.sgd_muni_municipio
@@ -157,9 +162,12 @@ class modRadicar(object):
         
         dbdir_i.label    = T("No identificación")
         dbdir_i.requires = IS_ALPHANUMERIC()
+
         
         dbdir_m.notnull  = True
         dbdir_m.label    = T('Ubicación')
+        dbdir_m.widget   = cascade.widget
+
 
         dbdir_d.label    = T('Dirección')
         dbdir_d.notnull  = True
